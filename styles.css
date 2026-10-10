@@ -1,0 +1,262 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    width:100%; height:100%; background:#000; overflow:hidden;
+    font-family:'Courier New', Courier, monospace; color:#d8f0d8;
+  }
+  body { display:flex; flex-direction:column; }
+
+  #scene-stage {
+    flex: 0 0 70vh;
+    height: 70vh;
+    display:block;
+    background:#000; position:relative; overflow:hidden;
+  }
+  #scene-frame {
+    position:absolute;
+    background-image:url('{{BG_MAIN}}');
+    background-size:100% 100%; background-position:center;
+  }
+  .hitbox {
+    position:absolute;
+    cursor:inherit;
+    border:2px solid transparent;
+    border-radius:2px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .hitbox:hover {
+    border-color: rgba(216,240,216,0.85);
+    background: rgba(216,240,216,0.12);
+  }
+  #scene-frame.debug .hitbox {
+    border: 3px solid rgba(255,40,40,0.95);
+    background: rgba(255,40,40,0.28);
+  }
+  #scene-frame.debug .hitbox::after {
+    content: attr(data-id);
+    position:absolute; top:2px; left:2px;
+    background: rgba(0,0,0,0.75); color:#fff;
+    font-size:10px; padding:1px 4px; white-space:nowrap;
+    pointer-events:none;
+  }
+
+  #ui-panel {
+    flex: 1 1 auto;
+    min-height: 0;
+    background:#0c120c;
+    border-top:2px solid #2a3a2a;
+    display:flex; flex-direction:column;
+    padding:10px 14px;
+    gap:8px;
+  }
+  #status-row {
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12px; color:#7fa07f; letter-spacing:0.03em;
+  }
+  #debug-toggle { display:flex; align-items:center; gap:6px; cursor:pointer; }
+
+  #verb-bar { display:flex; gap:8px; flex-wrap:wrap; }
+  .verb-btn {
+    background:#152015; border:1px solid #3a5a3a; color:#d8f0d8;
+    font-family:inherit; font-size:13px; text-transform:uppercase;
+    letter-spacing:0.05em; padding:8px 14px; cursor:pointer;
+  }
+  .verb-btn:hover { background:#1e2e1e; }
+  .verb-btn.active { background:#3a5a3a; border-color:#d8f0d8; }
+
+  #inventory-row {
+    display:flex; gap:8px; flex-wrap:wrap; min-height:38px;
+    border-top:1px solid #2a3a2a; border-bottom:1px solid #2a3a2a;
+    padding:6px 0;
+  }
+  .item-chip {
+    background:#152015; border:1px solid #3a5a3a; color:#d8f0d8;
+    font-family:inherit; font-size:13px; padding:6px 12px; cursor:pointer;
+  }
+  .item-chip:hover { background:#1e2e1e; }
+  .item-chip.armed { background:#5a7a3a; border-color:#d8f0d8; color:#0c120c; }
+  #inventory-row:empty::after {
+    content: "(empty)"; color:#4a6a4a; font-size:12px; padding:6px 0;
+  }
+
+  #output-text {
+    flex:1 1 auto; min-height:0; overflow-y:auto;
+    font-size:14px; line-height:1.5;
+    white-space:pre-line;
+  }
+
+  #continue-btn {
+    display:none;
+    background:#5a7a3a; border:1px solid #d8f0d8; color:#0c120c;
+    font-family:inherit; font-size:14px; letter-spacing:0.05em;
+    padding:10px 16px; cursor:pointer; text-transform:uppercase;
+  }
+
+  body.watch-mode .hitbox { display:none; }
+  body.watch-mode #verb-bar, body.watch-mode #inventory-row { display:none; }
+
+  #watch-open-btn {
+    background:#152015; border:1px solid #3a5a3a; color:#d8f0d8;
+    font-family:inherit; font-size:12px; padding:5px 10px; cursor:pointer;
+    margin-right:10px;
+  }
+  #watch-open-btn:hover { background:#1e2e1e; }
+
+  #door-open-btn {
+    background:#152015; border:1px solid #3a5a3a; color:#d8f0d8;
+    font-family:inherit; font-size:12px; padding:5px 10px; cursor:pointer;
+    margin-right:10px;
+  }
+  #door-open-btn:hover { background:#1e2e1e; }
+
+  .hitbox[data-id="door"], .hitbox[data-id="keypad"] { display:none; }
+  body.door-mode .hitbox[data-id="door"], body.door-mode .hitbox[data-id="keypad"] { display:block; }
+  body.door-mode .hitbox:not([data-id="door"]):not([data-id="keypad"]) { display:none; }
+
+  /* --- Stall interior subzones (stall1 / stall2 / stall3) --- */
+  /* [data-subzone] covers all subzone hitbox divs and their sprite <img>s
+     (tp-roll, lighter, sanitizer) */
+  [data-subzone] { display:none; }
+  body.active-stall1 [data-subzone="stall1"] { display:block; }
+  body.active-stall2 [data-subzone="stall2"] { display:block; }
+  body.active-stall3 [data-subzone="stall3"] { display:block; }
+  body.stall-mode .hitbox:not([data-subzone]) { display:none; }
+
+  /* --- Vent / cabinet close-up subzones (both real art) --- */
+  body.active-vent [data-subzone="vent"] { display:block; }
+  body.active-cabinet [data-subzone="cabinet"] { display:block; }
+  body.zoom-mode .hitbox:not([data-subzone]) { display:none; }
+
+  #subzone-back-btn {
+    position:absolute; top:3%; right:3%;
+    display:none;
+    background:rgba(0,0,0,0.55); border:1px solid #6a9a6a; color:#d8f0d8;
+    font-family:'Courier New', monospace; font-size:13px;
+    padding:6px 12px; cursor:pointer; text-transform:uppercase;
+  }
+  body.stall-mode #subzone-back-btn, body.zoom-mode #subzone-back-btn { display:block; }
+
+  #flash-overlay {
+    position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none;
+  }
+  #flash-overlay.active { animation: flashBlink 0.6s ease-out; }
+  @keyframes flashBlink {
+    0%   { opacity:0; }
+    8%   { opacity:0.9; }
+    16%  { opacity:0.08; }
+    24%  { opacity:0.7; }
+    35%  { opacity:0; }
+    100% { opacity:0; }
+  }
+
+  #rain-overlay {
+    position:absolute; inset:0; overflow:hidden; pointer-events:none;
+    opacity:0; transition:opacity 0.5s ease-out;
+  }
+  #rain-overlay.active { opacity:1; }
+  .raindrop {
+    position:absolute; top:-12%; width:2px; height:12%;
+    background:linear-gradient(to bottom, rgba(200,230,255,0), rgba(200,230,255,0.65));
+    animation: dropletFall linear infinite;
+  }
+  @keyframes dropletFall {
+    0%   { transform:translateY(-20%); opacity:0; }
+    15%  { opacity:1; }
+    100% { transform:translateY(650%); opacity:0; }
+  }
+
+  #watch-textbox {
+    position:absolute;
+    left:29%; top:15%; width:34%; height:52%;
+    display:none;
+    flex-direction:column;
+    align-items:flex-start; justify-content:center;
+    color:#bfe8bf; font-family:'Courier New', monospace;
+    font-size:1.05vw; line-height:1.5; text-align:left;
+    padding:0.4%; overflow:hidden;
+    transform: translateX(40px);
+  }
+  body.watch-mode #watch-textbox { display:flex; }
+  .watch-widget-title {
+    font-weight:bold; text-transform:uppercase; letter-spacing:0.08em;
+    font-size:0.95vw; color:#eaffea;
+    border-bottom:1px solid #4a6a4a; padding-bottom:0.3em; margin-bottom:0.5em;
+    width:100%;
+  }
+  .watch-widget-body { white-space:pre-line; }
+
+  #watch-nav {
+    position:absolute; left:30%; top:68%; width:38%;
+    display:none; align-items:center; justify-content:center; gap:16px;
+  }
+  body.watch-mode #watch-nav { display:flex; }
+  #watch-nav button {
+    background:rgba(20,30,20,0.7); border:1px solid #6a9a6a; color:#d8f0d8;
+    font-family:inherit; font-size:19px; width:36px; height:36px;
+    cursor:pointer; border-radius:50%;
+  }
+  #watch-dots { color:#8fbf8f; font-size:15px; letter-spacing:2px; }
+
+  #watch-textbox.photo-mode {
+    flex-direction: column;
+    align-items:center;
+    justify-content:flex-start;
+    text-align:center;
+    /* Bigger box + repositioned so the enlarged photo still clears the
+       watch's own screen bezel and the nav row below it (nav shifts down
+       slightly for photo widgets, see body.photo-nav above). */
+    left:29%; top:8%; width:38%; height:68%;
+    transform: translate(8px, 34px);
+  }
+  .watch-photo-box {
+    width: 100%;
+    aspect-ratio: 1 / 0.95;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    border-radius: 50%;
+  }
+  .watch-photo-box img {
+    width:100%; height:100%; object-fit:cover;
+  }
+  .watch-photo-placeholder {
+    width:100%; height:100%;
+    border:2px dashed #4a6a4a;
+    color:#4a6a4a; font-family:'Courier New', monospace; font-size:0.85vw;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  #watch-close-btn {
+    position:absolute; top:3%; right:3%;
+    display:none;
+    background:rgba(0,0,0,0.55); border:1px solid #6a9a6a; color:#d8f0d8;
+    font-family:'Courier New', monospace; font-size:13px;
+    padding:6px 12px; cursor:pointer; text-transform:uppercase;
+  }
+  body.watch-mode #watch-close-btn { display:block; }
+
+  @keyframes screenShake {
+    0%   { transform: translate(0,0) rotate(0deg); }
+    10%  { transform: translate(-1.2%, 0.6%) rotate(-0.4deg); }
+    20%  { transform: translate(1.4%, -0.5%) rotate(0.5deg); }
+    30%  { transform: translate(-1.0%, 0.8%) rotate(-0.6deg); }
+    40%  { transform: translate(1.2%, -1.0%) rotate(0.4deg); }
+    50%  { transform: translate(-0.9%, 0.5%) rotate(-0.3deg); }
+    60%  { transform: translate(0.8%, -0.6%) rotate(0.3deg); }
+    70%  { transform: translate(-0.6%, 0.4%) rotate(-0.2deg); }
+    80%  { transform: translate(0.4%, -0.3%) rotate(0.15deg); }
+    90%  { transform: translate(-0.2%, 0.15%) rotate(-0.1deg); }
+    100% { transform: translate(0,0) rotate(0deg); }
+  }
+  #scene-frame.shake { animation: screenShake 0.6s ease-in-out; }
+
+  /* Climbing onto the broken urinal: the view drops in slightly from above
+     (as if you just stepped up to this new eye level) and settles with a
+     light wobble, rather than cutting straight to the vent close-up. */
+  @keyframes stepUpOntoUrinal {
+    0%   { transform: translateY(-9%) scale(1.03) rotate(-0.6deg); }
+    40%  { transform: translateY(2.2%) scale(1.005) rotate(0.9deg); }
+    58%  { transform: translateY(-1.3%) scale(1.01) rotate(-0.5deg); }
+    74%  { transform: translateY(0.7%) rotate(0.3deg); }
+    88%  { transform: translateY(-0.3%) rotate(-0.1deg); }
+    100% { transform: translateY(0) scale(1) rotate(0deg); }
+  }
+  #scene-frame.step-up { animation: stepUpOntoUrinal 0.6s ease-out; }

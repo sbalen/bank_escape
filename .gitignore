@@ -1,0 +1,4 @@
+# Build output stays in history (single-file deliverable), but the
+# throwaway dry-run build from `build.py --check` should not.
+_zone1_build_check.html
+.scratch_debug_screens/

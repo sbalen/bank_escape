@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zone 1 — Men's Restroom</title>
+<style>
+{{STYLES}}
+</style>
+</head>
+<body>
+
+<div id="scene-stage">
+  <div id="scene-frame">
+    <!-- Hitboxes: left/top/width/height are % of the frame, matching the
+         confirmed overlay coordinates. -->
+    <div class="hitbox" data-id="stall1" style="left:0.5%;top:19.5%;width:11.34%;height:51.5%;"></div>
+    <div class="hitbox" data-id="stall2" style="left:11.84%;top:19.5%;width:10.74%;height:51.5%;"></div>
+    <div class="hitbox" data-id="stall3" style="left:22.58%;top:19.5%;width:10.74%;height:51.5%;"></div>
+
+    <div class="hitbox" data-id="urinal_ok1" style="left:38.4%;top:44.9%;width:5.0%;height:16.0%;"></div>
+    <div class="hitbox" data-id="urinal_ok2" style="left:45.11%;top:44.9%;width:4.9%;height:16.0%;"></div>
+    <div class="hitbox" data-id="urinal_ok3" style="left:51.83%;top:44.9%;width:4.9%;height:16.0%;"></div>
+    <div class="hitbox" data-id="urinal_broken" style="left:58.54%;top:44.9%;width:5.0%;height:16.0%;"></div>
+    <div class="hitbox" data-id="urinal_ok4" style="left:65.25%;top:44.9%;width:5.0%;height:16.0%;"></div>
+
+    <div class="hitbox" data-id="vent" style="left:47.25%;top:29%;width:15%;height:6%;"></div>
+    <div class="hitbox" data-id="firstaid" style="left:72.5%;top:33%;width:6%;height:14%;"></div>
+    <div class="hitbox" data-id="mirror" style="left:83%;top:18%;width:10.5%;height:32.5%;"></div>
+    <div class="hitbox" data-id="papertowel" style="left:93.5%;top:28.5%;width:5.5%;height:18.5%;"></div>
+    <div class="hitbox" data-id="sink" style="left:78%;top:50%;width:19.5%;height:12.5%;"></div>
+    <div class="hitbox" data-id="trashcan" style="left:93.5%;top:61%;width:5.5%;height:18.5%;"></div>
+
+    <div class="hitbox" data-id="sprinkler1" style="left:10.8%;top:9.1%;width:2.99%;height:6.8%;"></div>
+    <div class="hitbox" data-id="sprinkler2" style="left:47.8%;top:9.1%;width:2.99%;height:6.8%;"></div>
+    <div class="hitbox" data-id="sprinkler3" style="left:83.85%;top:9.1%;width:3.0%;height:6.8%;"></div>
+
+    <div class="hitbox" data-id="door" style="left:35.9%;top:19.7%;width:28.7%;height:70.2%;"></div>
+    <div class="hitbox" data-id="keypad" style="left:67.46%;top:43.19%;width:4.31%;height:11.6%;"></div>
+
+    <!-- Stall interiors (real art, pixel-calibrated) -->
+    <div class="hitbox" data-subzone="stall1" data-id="wall_text_1" style="left:68.18%;top:10.11%;width:28.41%;height:32.45%;"></div>
+    <div class="hitbox" data-subzone="stall1" data-id="jacket" style="left:8.07%;top:2.66%;width:15.85%;height:96.28%;"></div>
+
+    <div class="hitbox" data-subzone="stall2" data-id="wall_text_2" style="left:71.17%;top:9.57%;width:28.11%;height:39.89%;"></div>
+    <img id="tp-roll-sprite" data-subzone="stall2" src="{{SPRITE_TP_ROLL}}" style="position:absolute;left:41.8%;top:34.2%;width:3.85%;height:9.8%;pointer-events:none;">
+    <div class="hitbox" data-subzone="stall2" data-id="tp_roll" style="left:39.8%;top:32%;width:7.9%;height:13.8%;"></div>
+
+    <div class="hitbox" data-subzone="stall3" data-id="toilet_tank" style="left:39.18%;top:42.02%;width:17.94%;height:43.09%;"></div>
+
+    <!-- Vent close-up (real art — full-background swap between VENT_BG.closed/open,
+         same technique as the exit door, since the two photos aren't pixel-aligned
+         for a sprite-overlay approach). Two grille hitboxes share data-id="vent"
+         (same HOTSPOTS.vent logic) — only one is ever visible, toggled in JS by
+         updateVentGrilleVisibility() alongside the background swap. -->
+    <div class="hitbox" data-subzone="vent" data-id="vent" id="vent-grille-closed-hitbox" style="left:15%;top:29%;width:69.5%;height:29.5%;"></div>
+    <div class="hitbox" data-subzone="vent" data-id="vent" id="vent-grille-open-hitbox" style="left:14%;top:26%;width:72%;height:42%;"></div>
+    <img id="lighter-sprite" data-subzone="vent" src="{{SPRITE_LIGHTER}}" style="position:absolute;left:36.5%;top:55%;width:14%;height:10%;pointer-events:none;">
+    <div class="hitbox" data-subzone="vent" data-id="duct_lighter" id="duct-lighter-hitbox" style="left:36.5%;top:55%;width:14%;height:10%;"></div>
+
+    <!-- First-aid cabinet interior (real art — single shared photo with the
+         shelf already drawn empty; sanitizer bottle is a sprite overlay,
+         same pattern as the stall 2 toilet-paper roll). -->
+    <div class="hitbox" data-subzone="cabinet" data-id="bandages" style="left:29%;top:20%;width:26%;height:24%;"></div>
+    <img id="sanitizer-sprite" data-subzone="cabinet" src="{{SPRITE_SANITIZER}}" style="position:absolute;left:40%;top:47%;width:6.5%;height:30%;pointer-events:none;">
+    <div class="hitbox" data-subzone="cabinet" data-id="cabinet_sanitizer" id="cabinet-sanitizer-hitbox" style="left:37%;top:45%;width:12%;height:33%;"></div>
+
+    <button id="subzone-back-btn">← Back</button>
+
+    <div id="watch-textbox"></div>
+    <div id="watch-nav">
+      <button id="watch-prev">‹</button>
+      <span id="watch-dots"></span>
+      <button id="watch-next">›</button>
+    </div>
+    <button id="watch-close-btn">✕ Close</button>
+    <div id="flash-overlay"></div>
+    <div id="rain-overlay"></div>
+  </div>
+</div>
+
+<div id="ui-panel">
+  <div id="status-row">
+    <span id="status-text">Verb: Notice</span>
+    <span>
+      <button id="watch-open-btn">⌚ Check watch</button>
+      <button id="door-open-btn">🚪 Turn around</button>
+      <label id="debug-toggle"><input type="checkbox" id="debug-check"> show hitboxes</label>
+    </span>
+  </div>
+
+  <div id="verb-bar">
+    <button class="verb-btn active" data-verb="notice">Notice</button>
+    <button class="verb-btn" data-verb="take">Take</button>
+    <button class="verb-btn" data-verb="fiddle">Fiddle</button>
+    <button class="verb-btn" data-verb="use">Use</button>
+  </div>
+
+  <div id="inventory-row"></div>
+
+  <div id="output-text"></div>
+
+</div>
+
+<script>
+{{SCRIPT}}
+</script>
+
+</body>
+</html>

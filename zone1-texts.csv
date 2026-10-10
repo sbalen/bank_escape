@@ -1,0 +1,80 @@
+id,section,object,verb_context,condition,text
+output.intro,Output,—,initial console line,on zone load,You're stuck in the men's restroom on floor 42. 23:51. The door is locked — from the inside. There's no emergency. Yet.
+fallback.notice,Fallback,—,Notice,no specific text set,Nothing special. Standard office decor from a life you'll hopefully still have in an hour.
+fallback.take,Fallback,—,Take,no specific text set,"That's stuck, or it's just supposed to stay there. Probably both."
+fallback.fiddle,Fallback,—,Fiddle,no specific text set,"You fiddle with it a bit. It fiddles back, in the sense that absolutely nothing happens."
+fallback.use_bare,Fallback,—,Use (no item),no specific text set,You use it as intended. Riveting stuff.
+fallback.use_item,Fallback,—,Use (with item),no specific text set,"That doesn't go together. Even in an office full of bad decisions, this is one too many."
+item.coin.notice,Item,Coin,Notice,,"A coin. Twenty cents, maybe fifty. Enough for a screw, not enough for a solution."
+item.cigarettes.notice.no_lighter,Item,Cigarettes,Notice,before has_lighter,Half a pack left. No lighter in sight. Are you supposed to chew these?
+item.cigarettes.notice.has_lighter,Item,Cigarettes,Notice,after has_lighter,"You've got fire now. Ironically, no time left for a leisurely smoke."
+item.lighter.notice,Item,Lighter,Notice,,"Standard disposable lighter. Half full, or half empty, depending on your night."
+item.toilet_paper.notice,Item,Toilet paper,Notice,,"One roll, off its holder. Feels less heroic than it sounds."
+item.hand_sanitizer.notice,Item,Hand sanitizer,Notice,,"70%. Enough to disinfect, enough to ignite."
+item.soaked_paper.notice,Item,Soaked toilet paper,Notice,,Smells strong. Ready to ignite something that shouldn't be ignited.
+item.sprint_fragment.notice,Item,Sprint planning fragment,Notice,,A torn scrap of paper with part of a password or code. The rest is elsewhere.
+item.lipstick.notice,Item,Lipstick,Notice,,A tube of lipstick. Function unknown. Feels like Chekhov's gun.
+hotspot.stall1.notice,Hotspot,Stall 1,Notice,,"""Never push to production without someone reviewing your screen"" is scrawled on the door. A jacket hangs on the inside hook, left behind."
+hotspot.stall1.take.first,Hotspot,Stall 1,Take,first time (jacket),Inner pocket: a coin.
+hotspot.stall1.fiddle,Hotspot,Stall 1,Fiddle,,You check the other pockets. Just lint.
+hotspot.stall2.notice,Hotspot,Stall 2,Notice,sets knows_about_tank,"""Mark, we all know you sneak cigarettes in here."" Underneath, in a different hand: an arrow pointing at stall 3."
+hotspot.stall2.take.first,Hotspot,Stall 2,Take,first time (toilet paper),You pull off the roll. For emergencies — and this is starting to qualify as one.
+hotspot.stall3.notice.before,Hotspot,Stall 3,Notice,before knows_about_tank (plus fixed sign line),"A toilet tank. As toilet tanks go. A handwritten sign is taped to the door: ""Back soon! :)"" — whoever that's for, it's not you."
+hotspot.stall3.notice.after,Hotspot,Stall 3,Notice,after knows_about_tank (plus fixed sign line),"If Mark hides something here, this is the place. A handwritten sign is taped to the door: ""Back soon! :)"" — whoever that's for, it's not you."
+hotspot.stall3.use.first,Hotspot,Stall 3,Use,first time (open lid),"Lid off. A knotted plastic bag, kept dry above the waterline. Cigarettes."
+hotspot.stall3.use.again,Hotspot,Stall 3,Use,after opened,"Empty now, save for the faint smell of stale cigarettes."
+hotspot.urinal_broken.notice,Hotspot,Broken urinal,Notice,,"An ""out of order"" sign. Underneath, in marker: ""as always."" You suspect you're not the first person to try reaching something via this urinal — and probably not the last."
+hotspot.urinal_broken.use.first,Hotspot,Broken urinal,Use,first climb,"Detached from its wall mount, it wobbles unsettlingly. But no sensor, no flush. Stable enough — precisely because it's already broken."
+hotspot.urinal_broken.use.again,Hotspot,Broken urinal,Use,already on it,You're already up here.
+hotspot.urinal_working.notice,Hotspot,Working urinals (x4),Notice,,"Lined up neatly, except for one. You don't admire the symmetry."
+hotspot.urinal_working.use,Hotspot,Working urinals (x4),Use,climb on it,"You climb onto the rim. A sensor picks up your weight — the flush goes off, straight against your shin. You jump down, soaked from the knee down."
+hotspot.vent.notice.locked,Hotspot,Vent,Notice,before on_urinal,"A vent grille, high on the wall — well out of reach from the floor."
+hotspot.vent.notice.closed_first,Hotspot,Vent,Notice,"on_urinal, before vent_open, 1st time","Up close, the grille flutters slightly with the HVAC draft behind it. The last screw is loose, not tight. Muffled sound comes through the gap — you can't make it out. Might help if the grille were open."
+hotspot.vent.notice.closed_repeat,Hotspot,Vent,Notice,"on_urinal, before vent_open, repeated",Still that muffled sound through the gap. Still can't make anything out.
+hotspot.vent.notice.open_first,Hotspot,Vent,Notice,"after vent_open, 1st time","Behind the grille: an air duct carrying sound from the hallway. Two voices, muffled. ""...and that's why those doors always stay locked, except during an actual emergency — fire alarm, that kind of thing. Security protocol, since the audit."" A second voice mutters something about overtime. You mostly remember the first part."
+hotspot.vent.notice.open_repeat,Hotspot,Vent,Notice,"after vent_open, repeated","Still those two voices in the background — now about the coffee machine on floor 40, broken again. Not relevant. Familiar, though."
+hotspot.vent.fiddle.closed,Hotspot,Vent,Fiddle,before vent_open,You try to loosen the screw with your fingernails. Your nails weren't built for home improvement. Not happening.
+hotspot.vent.fiddle.open,Hotspot,Vent,Fiddle,after vent_open,Nothing left to fiddle with. It's already open.
+hotspot.vent.use.no_reach,Hotspot,Vent,Use (coin),before on_urinal,You reach up. You can't get to it. Unless you put something under your feet.
+hotspot.vent.use.success,Hotspot,Vent,Use (coin),on_urinal + has_coin,"From your elevated position, you loosen the last screw with the edge of the coin. The grille pops open."
+hotspot.vent.use.already,Hotspot,Vent,Use (coin),already open,Already open. No more screws left to turn.
+hotspot.firstaid.notice,Hotspot,First-aid cabinet,Notice,,Red cross on a white box. Classic.
+hotspot.firstaid.use.first,Hotspot,First-aid cabinet,Use,first open,"Bandages, a wrap, and a bottle of hand sanitizer — 70%, flammable enough to give HR a heart attack."
+hotspot.firstaid.use.again,Hotspot,First-aid cabinet,Use,already opened,Just bandages left now.
+hotspot.mirror.notice,Hotspot,Mirror,Notice,,A programmer who's stared at YAML for too long. The fluorescent tube flickers in time with your heartbeat.
+hotspot.sink.notice.before,Hotspot,Sink,Notice,before has_lipstick,"A tube of lipstick sits on the counter. In the men's room. You raise an eyebrow, decide not to think about it too hard."
+hotspot.sink.notice.after,Hotspot,Sink,Notice,after has_lipstick,Just a sink now. Someone really needs to fix that mirror.
+hotspot.sink.take,Hotspot,Sink,Take,first time (lipstick),You pick it up.
+hotspot.papertowel.notice,Hotspot,Paper towel dispenser,Notice,,"""OUT OF PAPER,"" the sign says. Somehow still worth checking."
+hotspot.papertowel.use,Hotspot,Paper towel dispenser,Use,,No paper towels. Of course not.
+hotspot.trashcan.notice,Hotspot,Trash can,Notice,,"A trash can, partly filled with the remnants of other people's evenings."
+hotspot.trashcan.take.first,Hotspot,Trash can,Take,first search,"Crumpled paper. Office archaeology. You unfold it: a fragment of a sprint planning printout, part of a string of characters half visible."
+hotspot.sprinkler.notice,Hotspot,Sprinklers (x3),Notice,,"Sprinklers, alright. Good to know you're safe from fire hazards."
+hotspot.sprinkler.take,Hotspot,Sprinklers (x3),Take,,Bolted to the ceiling. You're not exactly equipped for that.
+hotspot.sprinkler.fiddle,Hotspot,Sprinklers (x3),Fiddle,,You wave at it. It does not wave back. It's a sprinkler.
+hotspot.sprinkler.use.generic,Hotspot,Sprinklers (x3),Use (any item),,Too high to reach from here.
+hotspot.sprinkler.use.lighter,Hotspot,Sprinklers (x3),Use (lighter),,You can't light a sprinkler head. That's not how any of this works — you'd need actual smoke or heat.
+combine.paper_sanitizer,Combine,Toilet paper + Hand sanitizer,Use,,You squeeze the bottle empty over the roll. The smell hits the back of your throat immediately.
+combine.soaked_lighter,Combine,Soaked paper + Lighter,Use,the fire-starting combo,Whoosh. Bigger than expected. You flinch back.
+combine.dry_lighter,Combine,Toilet paper + Lighter,Use,failure — paper not soaked,You light a wad of dry toilet paper. It smolders a bit and goes out. Not dramatic enough for a sprinkler.
+combine.sanitizer_lighter,Combine,Hand sanitizer + Lighter,Use,failure — no paper,"A short, impressive whoomp. Your eyebrows barely survive. Fun, but there's no flammable material to actually trip the alarm."
+fire.transition,Combine,—,after fire sequence,console output + shake,"Sprinklers overhead. You're standing soaked next to a smoldering trash can, with a fire alarm blaring through the whole building. Somehow, this is the least absurd thing happening tonight.
+
+The door clicks open."
+watch.heart_rate.title,Watch,Heart Rate,title,,Heart Rate
+watch.heart_rate.text,Watch,Heart Rate,text,,"Current: 192 bpm.
+Average: 58.
+Maybe try some meditation."
+watch.heart_rate.console,Watch,Heart Rate,"console (prints below, in main output)",,Meditation? You consider dropping the watch in the toilet instead.
+watch.sleep.title,Watch,Sleep Score,title,,Sleep Score
+watch.sleep.text,Watch,Sleep Score,text,,"5h12m. Score: 41/100 — ""Poor.""
+""Try going to bed earlier tonight.""
+It's 23:51."
+watch.notifications.title,Watch,Notification Centre,title,,Notification Centre
+watch.notifications.text,Watch,Notification Centre,text,,"— Bol.com: wrong number (again)
+— Mom: ""Eating enough?? 🥺""
+— Unknown: ""Confirm delivery"" link
+— Coworker: ""Don't forget your badge"""
+watch.photo1.caption,Watch,Photo 1,caption,sandwich,A sad desk sandwich
+watch.photo2.caption,Watch,Photo 2,caption,office dog,"Neighbor's dog, ""floor mascot"""
+watch.photo3.caption,Watch,Photo 3,caption,desk / lanyard clue,"Your desk (insurance claim). Background: your badge, on the chair."
