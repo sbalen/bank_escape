@@ -64,16 +64,19 @@
   .verb-btn.active { background:#3a5a3a; border-color:#d8f0d8; }
 
   #inventory-row {
-    display:flex; gap:8px; flex-wrap:wrap; min-height:38px;
+    display:flex; gap:8px; flex-wrap:wrap; min-height:64px; flex:0 0 auto;
     border-top:1px solid #2a3a2a; border-bottom:1px solid #2a3a2a;
     padding:6px 0;
   }
   .item-chip {
-    background:#152015; border:1px solid #3a5a3a; color:#d8f0d8;
-    font-family:inherit; font-size:13px; padding:6px 12px; cursor:pointer;
+    background:#152015; border:1px solid #3a5a3a;
+    width:56px; height:56px; padding:4px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
-  .item-chip:hover { background:#1e2e1e; }
-  .item-chip.armed { background:#5a7a3a; border-color:#d8f0d8; color:#0c120c; }
+  @media (max-width:600px) { .item-chip { width:46px; height:46px; } #inventory-row { min-height:54px; gap:6px; } }
+  .item-chip img { max-width:100%; max-height:100%; pointer-events:none; display:block; }
+  .item-chip:hover { background:#1e2e1e; border-color:#8fbf8f; }
+  .item-chip.armed { background:#5a7a3a; border-color:#d8f0d8; box-shadow:0 0 0 2px #d8f0d8; }
   #inventory-row:empty::after {
     content: "(empty)"; color:#4a6a4a; font-size:12px; padding:6px 0;
   }

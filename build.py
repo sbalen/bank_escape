@@ -61,6 +61,15 @@ IMAGES = {
     "{{WATCH_PHOTO_1}}": "watch_photo1.webp",
     "{{WATCH_PHOTO_2}}": "watch_photo2.webp",
     "{{WATCH_PHOTO_3}}": "watch_photo3.webp",
+    # Inventory icons (256px, cel-shaded, transparent) - shown in the inventory row.
+    "{{ICON_COIN}}": "icon_coin.webp",
+    "{{ICON_CIGARETTES}}": "icon_cigarettes.webp",
+    "{{ICON_LIGHTER}}": "icon_lighter.webp",
+    "{{ICON_TOILET_PAPER}}": "icon_toilet_paper.webp",
+    "{{ICON_HAND_SANITIZER}}": "icon_hand_sanitizer.webp",
+    "{{ICON_SOAKED_PAPER}}": "icon_soaked_paper.webp",
+    "{{ICON_SPRINT_FRAGMENT}}": "icon_sprint_fragment.webp",
+    "{{ICON_LIPSTICK}}": "icon_lipstick.webp",
 }
 
 

@@ -50,10 +50,12 @@
   var ITEMS = {
     coin: {
       name: "Coin",
+      icon: "{{ICON_COIN}}",
       notice: function () { return TEXTS["item.coin.notice"]; }
     },
     cigarettes: {
       name: "Cigarettes",
+      icon: "{{ICON_CIGARETTES}}",
       notice: function (s) {
         return s.has_lighter
           ? TEXTS["item.cigarettes.notice.has_lighter"]
@@ -62,26 +64,32 @@
     },
     lighter: {
       name: "Lighter",
+      icon: "{{ICON_LIGHTER}}",
       notice: function () { return TEXTS["item.lighter.notice"]; }
     },
     toilet_paper: {
       name: "Toilet paper",
+      icon: "{{ICON_TOILET_PAPER}}",
       notice: function () { return TEXTS["item.toilet_paper.notice"]; }
     },
     hand_sanitizer: {
       name: "Hand sanitizer",
+      icon: "{{ICON_HAND_SANITIZER}}",
       notice: function () { return TEXTS["item.hand_sanitizer.notice"]; }
     },
     soaked_paper: {
       name: "Soaked toilet paper",
+      icon: "{{ICON_SOAKED_PAPER}}",
       notice: function () { return TEXTS["item.soaked_paper.notice"]; }
     },
     sprint_fragment: {
       name: "Sprint planning fragment",
+      icon: "{{ICON_SPRINT_FRAGMENT}}",
       notice: function () { return TEXTS["item.sprint_fragment.notice"]; }
     },
     lipstick: {
       name: "Lipstick",
+      icon: "{{ICON_LIPSTICK}}",
       notice: function () { return TEXTS["item.lipstick.notice"]; }
     }
   };
@@ -784,8 +792,14 @@
     inventory.forEach(function (id) {
       var chip = document.createElement("button");
       chip.className = "item-chip" + (armedItem === id ? " armed" : "");
-      chip.textContent = ITEMS[id].name;
+      chip.title = ITEMS[id].name;
+      chip.setAttribute("aria-label", ITEMS[id].name);
       chip.dataset.item = id;
+      var ico = document.createElement("img");
+      ico.src = ITEMS[id].icon;
+      ico.alt = "";
+      ico.draggable = false;
+      chip.appendChild(ico);
       inventoryEl.appendChild(chip);
     });
   }
